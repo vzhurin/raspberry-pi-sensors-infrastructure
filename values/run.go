@@ -28,6 +28,5 @@ func Run() error {
 		work,
 	)
 
-	robot.
 	return robot.Start()
 }

@@ -1,3 +1,0 @@
-- hosts: raspberry-pi-3
-  roles:
-    - role:

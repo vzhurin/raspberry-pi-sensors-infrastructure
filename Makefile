@@ -9,5 +9,8 @@ RUN_ANSIBLE_GALAXY=$(RUN_ANSIBLE) ansible-galaxy
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9\./_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
-ansible-galaxy-install:
+ansible-galaxy-install: ## Install ansible roles and collections
 	@$(RUN_ANSIBLE_GALAXY) install -r requirements.yml
+
+ansible-playbook-run: ## Run ansible playbook
+	@$(RUN_ANSIBLE_PLAYBOOK) -vvvv -i inventory.yml raspberry_pi.yml
