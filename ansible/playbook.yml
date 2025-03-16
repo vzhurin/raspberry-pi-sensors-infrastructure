@@ -1,0 +1,45 @@
+- hosts: all
+  vars:
+    service_user: sensor
+    infrastructure_dir: "/home/{{ service_user }}/infrastructure"
+    docker_dir: "{{ infrastructure_dir }}/docker"
+
+  tasks:
+    - ansible.builtin.apt:
+        name: acl
+        state: present
+      become: true
+
+    - ansible.builtin.user:
+        name: "{{ service_user }}"
+        system: true
+        state: present
+      become: true
+
+    - ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../docker/"
+        dest: "{{ docker_dir }}"
+        owner: "{{ service_user }}"
+        group: "{{ service_user }}"
+        mode: "u=rw,g=r,o=r"
+        directory_mode: "u=rwx,g=rx,o=rx"
+      become: true
+
+    - ansible.builtin.include_role:
+        name: geerlingguy.docker
+        apply:
+          become: true
+      vars:
+        docker_users:
+          - "{{ service_user }}"
+
+    - community.docker.docker_compose_v2:
+        project_src: "{{ docker_dir }}"
+        state: absent
+      become: true
+      become_user: "{{ service_user }}"
+
+    - community.docker.docker_compose_v2:
+        project_src: "{{ docker_dir }}"
+      become: true
+      become_user: "{{ service_user }}"
