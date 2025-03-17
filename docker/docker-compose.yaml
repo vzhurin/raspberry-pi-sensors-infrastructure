@@ -5,5 +5,13 @@ services:
       - "3000:3000"
     volumes:
       - grafana:/var/lib/grafana
+  prometheus:
+    image: prom/prometheus:v3.2.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus:/prometheus
+      - /etc/infrastructure/prometheus:/etc/prometheus
 volumes:
   grafana:
+  prometheus:

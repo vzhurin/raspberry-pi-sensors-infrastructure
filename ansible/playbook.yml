@@ -1,8 +1,17 @@
+# TODO
+# Docker started always
+# Prometheus ports
+# Prometheus config
+# Compose run flags
+
 - hosts: all
   vars:
     service_user: sensor
-    infrastructure_dir: "/home/{{ service_user }}/infrastructure"
+    infrastructure_dir: "/etc/infrastructure"
     docker_dir: "{{ infrastructure_dir }}/docker"
+    prometheus_dir: "{{ infrastructure_dir }}/prometheus"
+    file_mode: "u=rw,g=r,o=r"
+    directory_mode: "u=rwx,g=rx,o=rx"
 
   tasks:
     - ansible.builtin.apt:
@@ -19,10 +28,15 @@
     - ansible.builtin.copy:
         src: "{{ playbook_dir }}/../docker/"
         dest: "{{ docker_dir }}"
-        owner: "{{ service_user }}"
-        group: "{{ service_user }}"
-        mode: "u=rw,g=r,o=r"
-        directory_mode: "u=rwx,g=rx,o=rx"
+        mode: "{{ file_mode }}"
+        directory_mode: "{{ directory_mode }}"
+      become: true
+
+    - ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../prometheus/"
+        dest: "{{ prometheus_dir }}"
+        mode: "{{ file_mode }}"
+        directory_mode: "{{ directory_mode }}"
       become: true
 
     - ansible.builtin.include_role:
