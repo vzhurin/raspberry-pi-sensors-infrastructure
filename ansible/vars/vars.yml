@@ -1,0 +1,8 @@
+raspberry_pi_host: 192.168.1.35
+service_user: sensor
+infrastructure_dir: "/etc/infrastructure"
+docker_dir: "{{ infrastructure_dir }}/docker"
+prometheus_dir: "{{ infrastructure_dir }}/prometheus"
+file_mode: "u=rw,g=r,o=r"
+directory_mode: "u=rwx,g=rx,o=rx"
+prometheus_metrics_port: 9101

@@ -1,0 +1,7 @@
+scrape_configs:
+  - job_name: 'sensors'
+    scrape_interval: 5s
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - "{{ raspberry_pi_host }}:{{ prometheus_metrics_port }}"
