@@ -1,5 +1,6 @@
 services:
   grafana:
+    container_name: grafana
     image: grafana/grafana:11.5.2
     ports:
       - "3000:3000"
@@ -7,12 +8,22 @@ services:
       - grafana:/var/lib/grafana
     restart: unless-stopped
   prometheus:
+    container_name: prometheus
     image: prom/prometheus:v3.2.1
     ports:
       - "9090:9090"
     volumes:
       - prometheus:/prometheus
       - /etc/infrastructure/prometheus:/etc/prometheus
+    restart: unless-stopped
+  sensors:
+    container_name: sensors
+    build:
+      dockerfile: sensors.Dockerfile
+    devices:
+      - /dev/i2c-1
+    ports:
+      - "9101:9101"
     restart: unless-stopped
 volumes:
   grafana:

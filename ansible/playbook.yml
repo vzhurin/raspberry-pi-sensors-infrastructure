@@ -13,11 +13,22 @@
         state: present
       become: true
 
+    - ansible.builtin.file:
+        path: "{{ docker_dir }}"
+        state: directory
+        mode: "{{ directory_mode }}"
+      become: true
+
     - ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../docker/"
-        dest: "{{ docker_dir }}"
+        src: "{{ playbook_dir }}/../docker/docker-compose.yaml"
+        dest: "{{ docker_dir }}/docker-compose.yaml"
         mode: "{{ file_mode }}"
-        directory_mode: "{{ directory_mode }}"
+      become: true
+
+    - ansible.builtin.template:
+        src: "{{ playbook_dir }}/../docker/sensors.Dockerfile.j2"
+        dest: "{{ docker_dir }}/sensors.Dockerfile"
+        mode: "{{ file_mode }}"
       become: true
 
     - ansible.builtin.file:
@@ -39,6 +50,10 @@
       vars:
         docker_users:
           - "{{ service_user }}"
+
+    - ansible.builtin.systemd:
+        name: docker
+        enabled: true
 
     - community.docker.docker_compose_v2:
         project_src: "{{ docker_dir }}"
