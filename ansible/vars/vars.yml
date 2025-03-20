@@ -7,5 +7,5 @@ file_mode: "u=rw,g=r,o=r"
 directory_mode: "u=rwx,g=rx,o=rx"
 prometheus_metrics_port: 9101
 sensors_bin_url: "https://github.com/vzhurin/raspberry-pi-sensors/releases/download/{{ sensors_version }}/raspberry-pi-sensors-{{ sensors_version }}-linux-arm64"
-sensors_version: 0.0.2
+sensors_version: 0.0.3
 sensors_container_name: sensors
