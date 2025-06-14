@@ -6,7 +6,8 @@ RUN_ANSIBLE=docker run --rm -it \
 	-v $(PWD)/ansible:/data/ansible \
 	-v $(PWD)/docker:/data/docker \
 	-v $(PWD)/prometheus:/data/prometheus \
-	-v $(PWD)/ansible_galaxy:/root/.ansible $(IMAGE_ANSIBLE)
+	-v $(PWD)/ansible_galaxy:/root/.ansible \
+	$(IMAGE_ANSIBLE)
 RUN_ANSIBLE_PLAYBOOK=$(RUN_ANSIBLE) ansible-playbook
 RUN_ANSIBLE_GALAXY=$(RUN_ANSIBLE) ansible-galaxy
 

@@ -63,5 +63,6 @@
 
     - community.docker.docker_compose_v2:
         project_src: "{{ docker_dir }}"
+        build: always
       become: true
       become_user: "{{ service_user }}"
