@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+PWD := $(shell pwd)
 
 REMOTE_USER=basil
 IMAGE_ANSIBLE=cytopia/ansible:2.13
