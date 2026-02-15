@@ -1,4 +1,6 @@
 raspberry_pi_host: 192.168.1.41
+raspberry_pi_sensors_1_host: 192.168.1.53
+raspberry_pi_sensors_1_metrics_port: 9101
 service_user: sensor
 infrastructure_dir: "/etc/infrastructure"
 docker_dir: "{{ infrastructure_dir }}/docker"
@@ -7,5 +9,5 @@ file_mode: "u=rw,g=r,o=r"
 directory_mode: "u=rwx,g=rx,o=rx"
 prometheus_metrics_port: 9101
 sensors_bin_url: "https://github.com/vzhurin/raspberry-pi-sensors/releases/download/{{ sensors_version }}/raspberry-pi-sensors-{{ sensors_version }}-linux-arm64"
-sensors_version: 0.0.7
+sensors_version: 0.0.8
 sensors_container_name: sensors

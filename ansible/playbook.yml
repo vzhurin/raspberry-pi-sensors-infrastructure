@@ -19,8 +19,8 @@
         mode: "{{ directory_mode }}"
       become: true
 
-    - ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../docker/docker-compose.yaml"
+    - ansible.builtin.template:
+        src: "{{ playbook_dir }}/../docker/docker-compose.yaml.j2"
         dest: "{{ docker_dir }}/docker-compose.yaml"
         mode: "{{ file_mode }}"
       become: true

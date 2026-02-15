@@ -2,6 +2,8 @@ services:
   grafana:
     container_name: grafana
     image: grafana/grafana:11.5.2
+    environment:
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
     ports:
       - "3000:3000"
     volumes:
@@ -16,7 +18,7 @@ services:
       - prometheus:/prometheus
       - /etc/infrastructure/prometheus:/etc/prometheus
     restart: unless-stopped
-  sensors:
+  {{ sensors_container_name }}:
     container_name: sensors
     build:
       dockerfile: sensors.Dockerfile
