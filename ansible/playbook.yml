@@ -43,6 +43,18 @@
         mode: "{{ file_mode }}"
       become: true
 
+    - ansible.builtin.file:
+        path: "{{ mosquitto_dir }}"
+        state: directory
+        mode: "{{ directory_mode }}"
+      become: true
+
+    - ansible.builtin.template:
+        src: "{{ playbook_dir }}/../mosquitto/mosquitto.conf.j2"
+        dest: "{{ mosquitto_dir }}/mosquitto.conf"
+        mode: "{{ file_mode }}"
+      become: true
+
     - ansible.builtin.include_role:
         name: geerlingguy.docker
         apply:

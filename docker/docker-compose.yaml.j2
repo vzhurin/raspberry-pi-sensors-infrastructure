@@ -16,10 +16,36 @@ services:
       - "9090:9090"
     volumes:
       - prometheus:/prometheus
-      - /etc/infrastructure/prometheus:/etc/prometheus
+      - {{ prometheus_dir }}:/etc/prometheus
     restart: unless-stopped
-  {{ sensors_container_name }}:
-    container_name: sensors
+  zigbee2mqtt:
+   container_name: zigbee2mqtt
+   image: ghcr.io/koenkk/zigbee2mqtt:2.8.0
+   ports:
+     - "8080:8080"
+   volumes:
+     - zigbee2mqtt:/app/data
+     - /run/udev:/run/udev:ro
+   restart: unless-stopped
+   environment:
+     # TODO
+     - TZ=Europe/Moscow
+   devices:
+     # TODO
+     - /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_485f106df9c2ef11be7ce5b08048b910-if00-port0
+     - /dev/ttyUSB0
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0.22
+    ports:
+      - "1883:1883"
+    volumes:
+      - {{ mosquitto_dir }}:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+    restart: unless-stopped
+  sensors:
+    container_name: {{ sensors_container_name }}
     build:
       dockerfile: sensors.Dockerfile
     devices:
@@ -30,3 +56,6 @@ services:
 volumes:
   grafana:
   prometheus:
+  zigbee2mqtt:
+  mosquitto_data:
+  mosquitto_logs:

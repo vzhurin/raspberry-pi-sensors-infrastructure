@@ -5,6 +5,7 @@ service_user: sensor
 infrastructure_dir: "/etc/infrastructure"
 docker_dir: "{{ infrastructure_dir }}/docker"
 prometheus_dir: "{{ infrastructure_dir }}/prometheus"
+mosquitto_dir: "{{ infrastructure_dir }}/mosquitto"
 file_mode: "u=rw,g=r,o=r"
 directory_mode: "u=rwx,g=rx,o=rx"
 prometheus_metrics_port: 9101
