@@ -18,8 +18,8 @@ services:
       - prometheus:/prometheus
       - /etc/infrastructure/prometheus:/etc/prometheus
     restart: unless-stopped
-  {{ sensors_container_name }}:
-    container_name: sensors
+  sensors:
+    container_name: {{ sensors_container_name }}
     build:
       dockerfile: sensors.Dockerfile
     devices:
